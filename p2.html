@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div style="max-width: 50%; margin-left: 30%;">
+        <h1>Sentence Validator</h1>
+        <textarea  rows="10" cols="90" id="str"></textarea>
+        <br>
+        <button onclick="verify()">Submit</button>
+        <p id="res"></p>
+        <br>
+        <p id="a">A count is : </p>
+        <p id="an">An count is : </p>
+    </div>
+
+</body>
+
+<script>
+    function verify() {
+
+        let _str = document.getElementById("str").value;
+        var result = '';
+        let tokens = _str.split(' ');
+        let a_count = 0;
+        let an_count = 0;
+        for (let i = 0; i < tokens.length; i++) {
+            if (i != 0 || i != tokens.length - 1)
+                result += ' ';
+            if (tokens[i] == 'a' || tokens[i] == 'an' || tokens[i] == 'A' || tokens[i] == 'An') {
+                if (tokens[i] == 'a' || tokens[i] == 'A') {
+                    if (i < tokens.length - 1) {
+                        if (tokens[i + 1][0] != 'a' && tokens[i + 1][0] != 'e' && tokens[i + 1][0] != 'i' && tokens[i + 1][0] != 'o' && tokens[i + 1][0] != 'u' && tokens[i + 1][0] != 'A' && tokens[i + 1][0] != 'E' && tokens[i + 1][0] != 'I' && tokens[i + 1][0] != 'O' && tokens[i + 1][0] != 'U') {
+                            a_count++;
+                            result += tokens[i];
+                        }
+                        else {
+                            an_count++;
+                            if (i != 0)
+                                result += "an";
+                            else
+                                result += "An";
+                        }
+                    }
+
+                }
+                else {
+                    if (tokens[i + 1][0] == 'a' || tokens[i + 1][0] == 'e' || tokens[i + 1][0] == 'i' || tokens[i + 1][0] == 'o' || tokens[i + 1][0] == 'u' || tokens[i + 1][0] == 'A' || tokens[i + 1][0] == 'E' || tokens[i + 1][0] == 'I' || tokens[i + 1][0] == 'O' || tokens[i + 1][0] == 'U') {
+                        an_count++;
+                        result += tokens[i];
+                    }
+                    else {
+                        a_count++;
+                        if (i != 0)
+                            result += "a";
+                        else
+                            result += "A";
+                    }
+                }
+
+            }
+            else {
+                result += tokens[i];
+            }
+        }
+        document.getElementById("res").innerHTML = result;
+        document.getElementById("a").innerHTML = "A count is : " + a_count;
+        document.getElementById("an").innerHTML = "An count is : " + an_count;
+    }
+
+</script>
+
+</html>
